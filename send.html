@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Send Curl Request</title>
+</head>
+<body>
+
+<input type="text" id="userText" placeholder="Enter text here">
+<button onclick="sendCurlRequest()">Send</button>
+
+<script>
+async function sendCurlRequest() {
+  const userText = document.getElementById("userText").value;
+  const url = "https://api-eu.pusher.com/apps/1962611/events?";
+  const data = {
+    data: {message: userText},
+    name: "my-event",
+    channel: "my-channel"
+  };
+  const body_md5 = "2c99321eeba901356c4c7998da9be9e0"; // Replace with actual MD5 hash calculation if needed. [AI KNOWLEDGE]({})
+  const auth_key = "bda4365c9a00573d817d";
+  const auth_timestamp = Math.floor(Date.now() / 1000); // Generate timestamp [AI KNOWLEDGE]({})
+  // Note:  auth_signature needs to be generated using a secure method.  This example is for illustrative purposes only and is insecure. [AI KNOWLEDGE]({})
+  const auth_signature = "9349a050a6ecf35e855cd47e806aa60a6cd62359b3ae9888ba6ff80afb9fd2ac"; //  REPLACE THIS with proper signature generation. [AI KNOWLEDGE]({})
+
+  const fullUrl = `${url}body_md5=${body_md5}&auth_version=1.0&auth_key=${auth_key}&auth_timestamp=${auth_timestamp}&auth_signature=${auth_signature}`;
+
+  try {
+    const response = await fetch(fullUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
